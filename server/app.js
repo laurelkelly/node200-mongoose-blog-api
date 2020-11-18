@@ -14,8 +14,12 @@ const app = express();
 app.use(morgan('dev'));  
 app.use(bodyParser.urlencoded({ extended: false }));            
 app.use(bodyParser.json());
+
+app.set('views', './views');
+app.set('view engine', 'ejs');
                 
 app.get('/', (req, res) => {
+    res.render('index');
     res.status(200).send();
 });
 
