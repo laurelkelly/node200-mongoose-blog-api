@@ -9,7 +9,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('/api/blogs', function () {
-    this.timeout(6500);
+    this.timeout(12000);
 
     it('GET / should respond with blogs', (done) => {
         chai.request(app)
