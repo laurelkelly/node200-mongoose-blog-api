@@ -64,8 +64,9 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
                 
 app.get('/', (req, res) => {
-    res.render('index');
-    res.status(200).send();
+    if (res.render('index')) {
+        return res.status(200).send();
+    }
 });
 
 app.use('/api/users', require('./routes/users'));
