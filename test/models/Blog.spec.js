@@ -29,7 +29,7 @@ describe('Blog Model', () => {
         });
     });
 
-    it('should correctly establish relationship between User and Blog', (done) => {
+    it('should correctly establish relationship between User and Blog', () => {
         const u = new User(fakeUser);
 
         u
@@ -49,7 +49,7 @@ describe('Blog Model', () => {
             .then(([user, blog]) => {
                 expect(user.blogs.every(b => b._id === blog._id)).to.be.true;
 
-                done();
+                //done();
             })
         // .catch(error => console.error(error));        
     });
