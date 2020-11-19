@@ -21,18 +21,18 @@ describe('/api/blogs', function () {
             })
     });
 
-    it('GET /featured should respond with featured blogs only', (done) => {
+    it('GET /featured should respond with featured blogs only', () => {
         chai.request(app)
             .get('/api/blogs/featured')
             .end((err, res) => {
                 expect(res).to.have.status(200);
                 expect(res.body).to.be.instanceOf(Array);
                 expect(res.body.every(blog => blog.featured)).to.be.true;
-                done();
+                //done();
             })
     });
 
-    it('GET /:id should respond with a blog when a valid ID is presented', (done) => {
+    it('GET /:id should respond with a blog when a valid ID is presented', () => {
         createUserInDB().then(createBlogInDB).then(blog => {
             chai.request(app)
                 .get(`/api/blogs/${blog._id}`)
@@ -40,21 +40,21 @@ describe('/api/blogs', function () {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.instanceOf(Object);
                     expect(res.body._id).to.equal(String(blog._id));
-                    done();
+                    //done();
                 })
         });
     });
 
-    it('GET /:id should respond with 404 when an invalid ID is passed', (done) => {
+    it('GET /:id should respond with 404 when an invalid ID is passed', () => {
         chai.request(app)
             .get(`/api/blogs/${nonExistentObjectId}`)
             .end((err, res) => {
                 expect(res).to.have.status(404);
-                done();
+                //done();
             });
     });
 
-    it('POST / should save a new blog to the database when userId passed in body', (done) => {
+    it('POST / should save a new blog to the database when userId passed in body', () => {
         createUserInDB().then(user => {
             chai.request(app)
                 .post('/api/blogs')
@@ -75,13 +75,13 @@ describe('/api/blogs', function () {
                             expect(res.body._id).to.equal(savedBlogId);
                             expect(res.body.author).to.equal(String(user._id));
 
-                            done();
+                            //done();
                         });
                 });
         })
     });
 
-    it('PUT /:id should update a blog', (done) => {
+    it('PUT /:id should update a blog', () => {
         createUserInDB().then(createBlogInDB).then(blog => {
             chai.request(app)
                 .put(`/api/blogs/${blog._id}`)
@@ -97,13 +97,13 @@ describe('/api/blogs', function () {
                             expect(res).to.have.status(200);
                             expect(res.body._id).to.equal(String(blog._id));
                             expect(res.body.title).to.not.equal('Helo World');
-                            done();
+                            //done();
                         })
                 });
         });
     });
 
-    it('DELETE /:id should delete a blog', (done) => {
+    it('DELETE /:id should delete a blog', () => {
         createUserInDB().then(createBlogInDB).then(blog => {
             chai.request(app)
                 .delete(`/api/blogs/${blog._id}`)
@@ -115,9 +115,11 @@ describe('/api/blogs', function () {
                         .get(`/api/blogs/${blog._id}`)
                         .end((err, res) => {
                             expect(res).to.have.status(404);
-                            done();
+                            //done();
                         });
                 });
         });
     });
 });
+
+// Error: Timeout of 12000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves.

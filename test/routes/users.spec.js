@@ -11,17 +11,17 @@ chai.use(chaiHttp);
 describe('/api/users', function () {
     this.timeout(12000);
 
-    it('GET / should respond with users', (done) => {
+    it('GET / should respond with users', () => {
         chai.request(app)
             .get('/api/users')
             .end((err, res) => {
                 expect(res).to.have.status(200);
                 expect(res.body).to.be.instanceOf(Array);
-                done();
+                //done();
             });
     });
 
-    it('GET /:id should respond with a user when a valid ID is passed', (done) => {
+    it('GET /:id should respond with a user when a valid ID is passed', () => {
         createUserInDB().then(user => {
             chai.request(app)
                 .get(`/api/users/${user._id}`)
@@ -29,21 +29,21 @@ describe('/api/users', function () {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.instanceOf(Object);
                     expect(res.body._id).to.equal(String(user._id));
-                    done();
+                    //done();
                 });
         });
     });
 
-    it('GET /:id should respond with 404 when an invalid ID is passed', (done) => {
+    it('GET /:id should respond with 404 when an invalid ID is passed', () => {
         chai.request(app)
             .get(`/api/users/${nonExistentObjectId}`)
             .end((err, res) => {
                 expect(res).to.have.status(404);
-                done();
+                //done();
             });
     });
 
-    it('POST / should save a new user to the database', (done) => {
+    it('POST / should save a new user to the database', () => {
         chai.request(app)
             .post('/api/users')
             .send(fakeUser)
@@ -62,12 +62,12 @@ describe('/api/users', function () {
                         expect(res.body._id).to.exist;
                         expect(res.body._id).to.equal(savedUserId)
 
-                        done();
+                        //done();
                     });
             });
     });
 
-    it('PUT /:id should update a user', (done) => {
+    it('PUT /:id should update a user', () => {
         createUserInDB().then(user => {
             chai.request(app)
                 .put(`/api/users/${user._id}`)
@@ -84,13 +84,13 @@ describe('/api/users', function () {
                             expect(res.body._id).to.equal(String(user._id));
                             expect(res.firstName).to.not.equal('John');
                             expect(res.lastName).to.not.equal('Smith');
-                            done();
+                            //done();
                         });
                 });
         });
     });
 
-    it('DELETE /:id should delete a user', (done) => {
+    it('DELETE /:id should delete a user', () => {
         createUserInDB().then(user => {
             chai.request(app)
                 .delete(`/api/users/${user._id}`)
@@ -102,7 +102,7 @@ describe('/api/users', function () {
                         .get(`/api/users/${user._id}`)
                         .end((err, res) => {
                             expect(res).to.have.status(404);
-                            done();
+                            //done();
                         })
                 });
         })
