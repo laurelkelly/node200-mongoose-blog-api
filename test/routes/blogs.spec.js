@@ -11,13 +11,13 @@ chai.use(chaiHttp);
 describe('/api/blogs', function () {
     this.timeout(12000);
 
-    it('GET / should respond with blogs', (done) => {
+    it('GET / should respond with blogs', () => {
         chai.request(app)
             .get('/api/blogs')
             .end((err, res) => {
                 expect(res).to.have.status(200);
                 expect(res.body).to.be.instanceOf(Array);
-                done();
+                //done();
             })
     });
 
